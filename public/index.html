@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create personalized celebration pages for birthdays, anniversaries, Valentine's, Christmas, New Year, Student's Day, Independence Day, Labour Day, and Engineer's Day — download or share with someone you love.">
+    <title>CelebrateMe - Personalized Celebration Pages</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div id="theme-bg"><div class="layer active" id="bg-a"></div><div class="layer" id="bg-b"></div></div>
+    <div class="blob-field" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo"><h1>🎉 CelebrateMe</h1></div>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="birthday" type="button">
+                    <span class="icon" aria-hidden="true">🎂</span><span>Birthday</span>
+                </button>
+                <button class="tab-btn" data-tab="anniversary" type="button">
+                    <span class="icon" aria-hidden="true">💍</span><span>Anniversary</span>
+                </button>
+                <button class="tab-btn" data-tab="valentine" type="button">
+                    <span class="icon" aria-hidden="true">💝</span><span>Valentine's Day</span>
+                </button>
+                <button class="tab-btn" data-tab="christmas" type="button">
+                    <span class="icon" aria-hidden="true">🎄</span><span>Christmas</span>
+                </button>
+                <button class="tab-btn" data-tab="newyear" type="button">
+                    <span class="icon" aria-hidden="true">🎆</span><span>New Year</span>
+                </button>
+                <button class="tab-btn" data-tab="studentday" type="button">
+                    <span class="icon" aria-hidden="true">🎓</span><span>Student's Day</span>
+                </button>
+                <button class="tab-btn" data-tab="independenceday" type="button">
+                    <span class="icon" aria-hidden="true">🇮🇳</span><span>Independence Day</span>
+                </button>
+                <button class="tab-btn" data-tab="labourday" type="button">
+                    <span class="icon" aria-hidden="true">🛠️</span><span>Labour Day</span>
+                </button>
+                <button class="tab-btn" data-tab="engineerday" type="button">
+                    <span class="icon" aria-hidden="true">⚙️</span><span>Engineer's Day</span>
+                </button>
+            </nav>
+        </aside>
+        <main class="content">
+            <div class="form-container">
+                <form id="birthday-form" class="celebration-form active" data-type="birthday">
+                    <h2>🎂 Birthday Celebration</h2>
+                    <div class="form-group">
+                        <label for="bd-name">Birthday Person's Name:</label>
+                        <input id="bd-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="bd-age">Age:</label>
+                        <input id="bd-age" type="number" name="age" required min="0" max="150" placeholder="Enter age">
+                    </div>
+                    <div class="form-group">
+                        <label for="bd-from">From:</label>
+                        <input id="bd-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🎉</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="anniversary-form" class="celebration-form" data-type="anniversary">
+                    <h2>💍 Anniversary Celebration</h2>
+                    <div class="form-group">
+                        <label for="an-partner1">Partner 1 Name:</label>
+                        <input id="an-partner1" type="text" name="partner1" required maxlength="60" placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="an-partner2">Partner 2 Name:</label>
+                        <input id="an-partner2" type="text" name="partner2" required maxlength="60" placeholder="Enter second name">
+                    </div>
+                    <div class="form-group">
+                        <label for="an-years">Years Together:</label>
+                        <input id="an-years" type="number" name="years" required min="0" max="150" placeholder="Enter years">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 💑</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="valentine-form" class="celebration-form" data-type="valentine">
+                    <h2>💝 Valentine's Day Celebration</h2>
+                    <div class="form-group">
+                        <label for="v-yourName">Your Name:</label>
+                        <input id="v-yourName" type="text" name="yourName" required maxlength="60" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="v-theirName">💝 Your soulmate's Name:</label>
+                        <input id="v-theirName" type="text" name="theirName" required maxlength="60" placeholder="Enter their name">
+                    </div>
+                    <div class="form-group">
+                        <label for="v-message">💕 Love Message:</label>
+                        <textarea id="v-message" name="message" required maxlength="1000" placeholder="Write your heartfelt message..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 💕</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="christmas-form" class="celebration-form" data-type="christmas">
+                    <h2>🎄 Christmas Celebration</h2>
+                    <div class="form-group">
+                        <label for="c-name">Recipient's Name:</label>
+                        <input id="c-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="c-from">From:</label>
+                        <input id="c-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🎅</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="newyear-form" class="celebration-form" data-type="newyear">
+                    <h2>🎆 New Year Celebration</h2>
+                    <div class="form-group">
+                        <label for="ny-name">Recipient's Name:</label>
+                        <input id="ny-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="ny-year">Year:</label>
+                        <input id="ny-year" type="number" name="year" required min="1900" max="2999" placeholder="2026" value="2026">
+                    </div>
+                    <div class="form-group">
+                        <label for="ny-from">From:</label>
+                        <input id="ny-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="ny-message">New Year Message:</label>
+                        <textarea id="ny-message" name="message" required maxlength="1000" placeholder="Write your New Year wishes..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🎊</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="studentday-form" class="celebration-form" data-type="studentday">
+                    <h2>🎓 Student's Day Celebration</h2>
+                    <div class="form-group">
+                        <label for="sd-name">Student's Name:</label>
+                        <input id="sd-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="sd-from">From:</label>
+                        <input id="sd-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🎓</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="independenceday-form" class="celebration-form" data-type="independenceday">
+                    <h2>🇮🇳 Independence Day Celebration</h2>
+                    <div class="form-group">
+                        <label for="id-name">Recipient's Name:</label>
+                        <input id="id-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="id-from">From:</label>
+                        <input id="id-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🇮🇳</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="labourday-form" class="celebration-form" data-type="labourday">
+                    <h2>🛠️ Labour Day Celebration</h2>
+                    <div class="form-group">
+                        <label for="ld-name">Recipient's Name:</label>
+                        <input id="ld-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="ld-from">From:</label>
+                        <input id="ld-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page 🛠️</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+                <form id="engineerday-form" class="celebration-form" data-type="engineerday">
+                    <h2>⚙️ Engineer's Day Celebration</h2>
+                    <div class="form-group">
+                        <label for="ed-name">Recipient's Name:</label>
+                        <input id="ed-name" type="text" name="name" required maxlength="60" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="ed-from">From:</label>
+                        <input id="ed-from" type="text" name="from" required maxlength="60" placeholder="Your name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Download Page ⚙️</button>
+                        <button type="button" class="btn btn-secondary share-btn">Get Shareable Link 🔗</button>
+                    </div>
+                    <div class="share-result">
+                        <div class="share-row">
+                            <input type="text" readonly aria-label="Shareable link">
+                            <button type="button" class="copy-btn">Copy</button>
+                        </div>
+                        <div class="status" role="status"></div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="/themes.js"></script>
+    <script src="/templates.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

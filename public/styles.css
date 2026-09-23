@@ -1,0 +1,394 @@
+:root {
+    --accent: #FF3D9A;
+    --accent2: #FF8FC7;
+    --glow: rgba(255, 61, 154, 0.28);
+    --font-heading: 'Fredoka', 'Segoe UI', sans-serif;
+    --font-body: 'Nunito', 'Segoe UI', sans-serif;
+    --ink: #2c2438;
+    --ink-soft: #5c5470;
+    --surface: 255, 255, 255;
+    /* Force native form controls (caret, autofill, scrollbars) to render in
+       their light variant — otherwise a device/browser in dark mode renders
+       the text caret white, and it vanishes against our light inputs. */
+    color-scheme: light only;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { height: 100%; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: #FBF8FF;
+    color: var(--ink);
+}
+
+/* ---- Crossfading themed pastel backdrop --------------------------------- */
+#theme-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+}
+
+#theme-bg .layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    background: linear-gradient(135deg, #FFF0F6 0%, #FFE1F0 45%, #FFD1E8 100%);
+}
+
+#theme-bg .layer.active { opacity: 1; }
+
+/* ---- Aurora-style floating gradient blobs (ambient motion, light mode) --- */
+.blob-field { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    background: radial-gradient(circle at 30% 30%, var(--accent), transparent 70%);
+    animation: driftBlob 24s ease-in-out infinite;
+    transition: background 1.2s ease;
+    mix-blend-mode: multiply;
+}
+
+.blob:nth-child(1) { width: 420px; height: 420px; top: -100px; left: -80px; animation-duration: 28s; }
+.blob:nth-child(2) { width: 340px; height: 340px; bottom: -80px; right: -60px; animation-duration: 32s; animation-delay: -8s; background: radial-gradient(circle at 70% 30%, var(--accent2), transparent 70%); }
+.blob:nth-child(3) { width: 260px; height: 260px; top: 40%; right: 12%; animation-duration: 22s; animation-delay: -4s; }
+
+@keyframes driftBlob {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+    33% { transform: translate3d(50px, -35px, 0) scale(1.15) rotate(8deg); }
+    66% { transform: translate3d(-35px, 30px, 0) scale(0.92) rotate(-6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .blob, .tab-btn .icon, .celebration-form.active { animation: none !important; }
+}
+
+.app-container { display: flex; min-height: 100vh; }
+
+/* ---- Light glassmorphic sidebar ------------------------------------------ */
+.sidebar {
+    width: 280px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 2px 0 30px rgba(120, 80, 140, 0.12), inset -1px 0 0 rgba(255, 255, 255, 0.6);
+    padding: 30px 0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.logo { text-align: center; margin-bottom: 40px; padding: 0 20px; }
+
+.logo h1 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 24px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: background 0.6s ease;
+    animation: shimmerText 4s ease-in-out infinite;
+}
+
+@keyframes shimmerText {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.15); }
+}
+
+.tabs { display: flex; flex-direction: column; gap: 10px; padding: 0 20px; perspective: 800px; }
+
+/* ---- Neumorphic light tab buttons ----------------------------------------- */
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.5s ease, border-color 0.5s ease, background 0.5s ease;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-soft);
+    text-align: left;
+    box-shadow: 5px 5px 12px rgba(160, 130, 180, 0.18), -4px -4px 10px rgba(255, 255, 255, 0.9);
+    transform-style: preserve-3d;
+}
+
+.tab-btn .icon { font-size: 22px; transition: transform 0.4s ease; display: inline-block; }
+
+/* Hover-only motion is gated behind (hover: hover) so a tap on a touchscreen
+   never "sticks" the shifted/rotated look after the finger lifts. */
+@media (hover: hover) and (pointer: fine) {
+    .tab-btn:hover {
+        transform: translateX(4px) rotateY(-4deg);
+        border-color: var(--glow);
+        color: var(--ink);
+    }
+
+    .tab-btn:hover .icon { transform: rotateY(180deg) scale(1.15); }
+}
+
+.tab-btn:active { transform: scale(0.97); }
+
+.tab-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 8px 22px var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: translateX(2px) translateZ(10px);
+}
+
+.content {
+    margin-left: 280px;
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1600px;
+}
+
+.form-container { width: 100%; max-width: 600px; }
+
+/* ---- Light glassmorphic form card with 3D flip-in ------------------------- */
+.celebration-form {
+    display: none;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(140, 100, 160, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transform-style: preserve-3d;
+}
+
+.celebration-form.active { display: block; animation: formIn3D 0.6s cubic-bezier(.2, .8, .2, 1); }
+
+@keyframes formIn3D {
+    from { opacity: 0; transform: rotateX(-14deg) translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: rotateX(0) translateY(0) scale(1); }
+}
+
+.celebration-form h2 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: var(--ink);
+    font-size: 28px;
+    text-align: center;
+    transition: color 0.6s ease;
+}
+
+.form-group { margin-bottom: 25px; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ink-soft);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* ---- Neumorphic light inset inputs ----------------------------------------- */
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid rgba(140, 110, 155, 0.4);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 3px 3px 8px rgba(160, 130, 180, 0.12), inset -2px -2px 6px rgba(255, 255, 255, 0.8);
+    color: var(--ink);
+    color-scheme: light only;
+    caret-color: var(--accent);
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder { color: rgba(92, 84, 112, 0.5); }
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: inset 2px 2px 6px rgba(160, 130, 180, 0.1), 0 0 0 3px var(--glow);
+}
+
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+.form-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn {
+    flex: 1;
+    min-width: 180px;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.4s ease, background 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ---- Neumorphic raised primary button --------------------------------------- */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: white;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--ink);
+    border: 2px solid var(--accent);
+    box-shadow: 5px 5px 12px rgba(160, 130, 180, 0.15), -3px -3px 8px rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { transform: translateY(-3px) translateZ(10px) rotateX(4deg); box-shadow: 0 14px 30px var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.95); transform: translateY(-2px); }
+}
+
+.btn-primary:active { transform: translateY(0) translateZ(0) scale(0.98); }
+.btn-secondary:active { transform: scale(0.98); }
+
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+.share-result {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--glow);
+    border-radius: 12px;
+    display: none;
+    transition: border-color 0.6s ease;
+}
+
+.share-result.visible { display: block; animation: formIn3D 0.4s ease; }
+
+.share-result .share-row { display: flex; gap: 8px; }
+
+.share-result input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(140, 110, 155, 0.4);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+    font-size: 14px;
+    box-shadow: none;
+    color-scheme: light only;
+    caret-color: var(--accent);
+}
+
+.share-result .copy-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: #fff;
+    font-family: var(--font-body);
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.5s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .share-result .copy-btn:hover { transform: translateY(-1px); }
+}
+
+.share-result .copy-btn:active { transform: scale(0.97); }
+
+.share-result .status { margin-top: 8px; font-size: 13px; color: var(--ink-soft); min-height: 16px; }
+
+/* ============================================================================
+   MOBILE
+   The sidebar becomes a sticky, horizontally-scrollable chip bar instead of
+   9 stacked full-width buttons (which used to push the form far below the
+   fold). Blur radii are trimmed for weaker mobile GPUs.
+   ============================================================================ */
+@media (max-width: 900px) {
+    .app-container { flex-direction: column; }
+
+    .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        width: 100%;
+        height: auto;
+        padding: 14px 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .logo { margin-bottom: 12px; padding: 0 16px; }
+    .logo h1 { font-size: 20px; }
+
+    .tabs {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 16px 4px;
+        gap: 8px;
+        perspective: none;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .tab-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 14px;
+        scroll-snap-align: start;
+        min-height: 44px;
+    }
+
+    .tab-btn.active { transform: none; }
+
+    .content { margin-left: 0; padding: 20px 16px 40px; }
+
+    .celebration-form { padding: 28px 20px; }
+
+    .form-actions { flex-direction: column; }
+    .form-actions .btn { min-width: 100%; }
+
+    .blob { filter: blur(36px); }
+    .blob:nth-child(1) { width: 260px; height: 260px; }
+    .blob:nth-child(2) { width: 220px; height: 220px; }
+    .blob:nth-child(3) { display: none; }
+
+    .sidebar, .celebration-form {
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+}
+
+@media (max-width: 420px) {
+    .celebration-form { padding: 22px 16px; border-radius: 18px; }
+    .celebration-form h2 { font-size: 24px; }
+    .tab-btn span:not(.icon) { font-size: 14px; }
+}

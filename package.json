@@ -1,0 +1,21 @@
+{
+  "name": "celebrate-me",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Create and share personalized celebration pages.",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "nanoid": "^3.3.7",
+    "zod": "^3.23.8"
+  }
+}
